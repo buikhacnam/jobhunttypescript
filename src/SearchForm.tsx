@@ -1,44 +1,37 @@
 import React from 'react';
-import { Form, Input, Button } from 'antd';
+import { Form, Input } from 'antd';
 
-const SearchForm: React.FC = ({params, onParamChange}) => {
+
+interface searchParams {
+  params: any;
+  onParamChange: any;
+}
+const SearchForm: React.FC<searchParams> = ({params, onParamChange}) => {
     const [form] = Form.useForm();
 
     const formItemLayout =
        {
             labelCol: {
-              span: 4,
+              span: 9,
             },
             wrapperCol: {
-              span: 14,
+              span: 44,
             },
         }
   
-    const buttonItemLayout =
-      {
-            wrapperCol: {
-              span: 14,
-              offset: 4,
-            },
-      }
-        
     return (
       <>
         <Form
           {...formItemLayout}
           layout='horizontal'
           form={form}
-          onFinish={onParamChange}
         >
        
-          <Form.Item label="Description">
-            <Input value={params.description} onChange={onParamChange}/>
+          <Form.Item label="Job Description">
+            <Input name="description" type="text" value={params.description} onChange={onParamChange}/>
           </Form.Item>
           <Form.Item label="Location">
-            <Input value={params.location} onChange={onParamChange}/>
-          </Form.Item>
-          <Form.Item {...buttonItemLayout}>
-            <Button type="primary">Submit</Button>
+            <Input name="location" type="text" value={params.location} onChange={onParamChange}/>
           </Form.Item>
         </Form>
       </>
