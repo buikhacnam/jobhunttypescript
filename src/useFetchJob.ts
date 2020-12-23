@@ -1,50 +1,49 @@
 import { useReducer, useEffect } from 'react'; 
 import axios from "axios";
 
+const baseUrl = "https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json";
 
+type Actions = 
+    | { type: 'make-request' }
+    | { type: 'get-data', payload: { jobs: Object } }
+    | { type: 'error', payload: { error: string } };
 
-const ACTIONS = {
-    MAKE_REQUEST: 'make-request',
-    GET_DATA: 'get-data1',
-    ERROR: 'error'
-};
+type State = any;
 
-const BASE_URL = "https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json";
-function reducer(state:any, action:any){
-    switch (action.type){
-        case ACTIONS.MAKE_REQUEST:
-            return { loading: true, jobs: []};
-        case ACTIONS.GET_DATA:
+function reducer(state:State, action:Actions) {
+    switch (action.type) {
+        case 'make-request':
+            return { loading: true, jobs: [] };
+        case 'get-data':
             return {...state, loading: false, jobs: action.payload.jobs };
-        case ACTIONS.ERROR:
+        case 'error':
             return {...state, loading: false, error: action.payload.error, jobs: [] };
         default:
             return state;
     }
 };
 
-export default function useFetchJob(params:any) {
-    const [state, dispatch] = useReducer(reducer, { jobs: [], loading: true});
+export default function useFetchJob(params:Object) {
+    const [state, dispatch] = useReducer(reducer, { jobs: [], loading: true });
     useEffect(() => {
         //dont want to make request every time you type:
-        const cancelToken1 = axios.CancelToken.source()
-        dispatch( { type: ACTIONS.MAKE_REQUEST });
-        axios.get(BASE_URL, {
-            cancelToken: cancelToken1.token,
-            params: { markdown: true,  ...params }
+        const cancelToken = axios.CancelToken.source()
+        dispatch({ type: 'make-request' });
+        axios.get(baseUrl, {
+            cancelToken: cancelToken.token,
+            params: { markdown: true, ...params }
         }).then(res => {
-            dispatch({ type: ACTIONS.GET_DATA, payload: { jobs: res.data } });
+            dispatch({ type: 'get-data', payload: { jobs: res.data } });
         }).catch(e => {
             if (axios.isCancel(e)) return
-            dispatch({ type: ACTIONS.ERROR, payload: { error: e } })
+            dispatch({ type: 'error', payload: { error: e } })
         });
 
-
         return () => {
-            cancelToken1.cancel();
+            cancelToken.cancel();
         }
 
     }, [params]);
-    console.log(state);
+    //console.log(state);
     return state;    
 };

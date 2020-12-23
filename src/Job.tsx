@@ -5,9 +5,9 @@ import ReactMarkdown from 'react-markdown';
 
 const { Meta } = Card;
 
-export interface jobInterface {
+interface jobInterface {
     job: any;
-    key?: any;
+    key?: string;
 }
 
 const Job: React.FC<jobInterface> = ({job}) => {
@@ -17,7 +17,7 @@ const Job: React.FC<jobInterface> = ({job}) => {
        setIsModalVisible(true);
     };
 
-     const handleOk = () => {
+    const handleOk = () => {
      setIsModalVisible(false);
     };
 
@@ -31,7 +31,7 @@ const Job: React.FC<jobInterface> = ({job}) => {
         cover={<img src={job.company_logo} alt={job.company} height="120px"/>}
       >
         <Meta title={job.title}  description={job.company}/>
-        <p style = {{color: '#8C8C8C', fontSize: '0.8rem', marginTop: "10px"}}>{new Date(job.created_at).toLocaleDateString()}</p>
+        <p style = {{color: '#8C8C8C', fontSize: '0.8rem', marginTop: "10px"}}>{new Date(job.created_at).toLocaleDateString()} - {job.location}</p>
         <div>
             <Button type="primary" onClick={showModal}>
               Details

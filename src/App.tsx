@@ -8,19 +8,19 @@ import { Spin } from 'antd';
 
 export interface paramsInterface {
   loading: boolean;
-  job: any[];
+  job: object[];
   error?: string;
 }
 
 const App:React.FC = () => {
   const [params, setParams] = useState<paramsInterface>({loading: true, job: []});
-  const { jobs, loading, error} = useFetchJobs(params);
+  const { jobs, loading, error } = useFetchJobs(params);
   
-  function handleParamChange(e:any) {
+  function handleParamChange(e: React.ChangeEvent<HTMLInputElement>) {
     const param = e.target.name;
     const value = e.target.value;
     setParams(prev => {
-      return {...prev, [param]: value};
+      return { ...prev, [param]: value };
     })
   }
 
@@ -28,11 +28,11 @@ const App:React.FC = () => {
     <Body>
         <SearchFormWrapper>
           <div>
-            <h1 style={{display:'block'}}>QUICK TEK JOBS</h1>
-            <a style={{display:'block'}} href="https://jobs.github.com/api">API Source</a>
+            <h1 style={{display:'block', marginLeft: "10px"}}>QUICK TEK JOBS</h1>
+            <a style={{display:'block', marginLeft: "10px"}} href="https://jobs.github.com/api">API Source</a>
           </div>
           <div>
-            <SearchForm params={params} onParamChange={handleParamChange} />
+            <SearchForm onParamChange={handleParamChange} />
           </div>
           <div>
             <img style={{marginRight: "10px"}} src="https://raw.githubusercontent.com/styled-components/brand/master/styled-components.png" height='60px' alt="logo" />
@@ -52,6 +52,7 @@ const App:React.FC = () => {
 }
 
 const ContentWrapper = styled.div`
+  padding: 10px;
   padding-top: 50px;
   margin: 0 auto;
   display: grid;
