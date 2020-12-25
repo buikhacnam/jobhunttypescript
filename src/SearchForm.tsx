@@ -13,7 +13,7 @@ const SearchForm: React.FC<searchParams> = ({onParamChange}) => {
               span: 9,
             },
             wrapperCol: {
-              span: 44,
+              span: 100,
             },
         }
   
@@ -24,7 +24,7 @@ const SearchForm: React.FC<searchParams> = ({onParamChange}) => {
           layout='horizontal'
           form={form}
         >
-          <Form.Item label="Job Description">
+          <Form.Item label="Description">
             <Input name="description" type="text" onChange={onParamChange}/>
           </Form.Item>
           <Form.Item label="Location">

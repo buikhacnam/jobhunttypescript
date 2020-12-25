@@ -1,4 +1,4 @@
-import { useReducer, useEffect } from 'react'; 
+import { useReducer, useEffect} from 'react'; 
 import axios from "axios";
 
 const baseUrl = "https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json";
@@ -45,5 +45,5 @@ export default function useFetchJob(params:Object) {
 
     }, [params]);
     //console.log(state);
-    return state;    
+    return state;   
 };

@@ -8,10 +8,17 @@ const { Meta } = Card;
 interface jobInterface {
     job: any;
     key?: string;
+    handleSaveJob: (job:any) => any;
 }
 
-const Job: React.FC<jobInterface> = ({job}) => {
+const Job: React.FC<jobInterface> = ({job, handleSaveJob}) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [isSaved, setIsSaved] = useState(false);
+   
+    const preHandleSavedJob = () => {
+      handleSaveJob(job);
+      setIsSaved(true);
+    }
 
     const showModal = () => {
        setIsModalVisible(true);
@@ -35,7 +42,10 @@ const Job: React.FC<jobInterface> = ({job}) => {
         <div>
             <Button type="primary" onClick={showModal}>
               Details
-            </Button>
+            </Button> {}
+          {!isSaved && <Button onClick={preHandleSavedJob}>
+              Save
+            </Button>}  
              <Modal title={job.title} visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} width={1000}>
                 <div>
                     <ReactMarkdown source={job.description} />
