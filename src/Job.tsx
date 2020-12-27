@@ -9,9 +9,10 @@ interface jobInterface {
     job: any;
     key?: string;
     handleSaveJob: (job:any) => any;
+    savedJob: any;
 }
 
-const Job: React.FC<jobInterface> = ({job, handleSaveJob}) => {
+const Job: React.FC<jobInterface> = ({job, handleSaveJob, savedJob}) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [isSaved, setIsSaved] = useState(false);
    
@@ -48,7 +49,12 @@ const Job: React.FC<jobInterface> = ({job, handleSaveJob}) => {
             </Button>}  
              <Modal title={job.title} visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} width={1000}>
                 <div>
-                    <ReactMarkdown source={job.description} />
+                  {!isSaved && <Button onClick={preHandleSavedJob}>
+                    Save this job
+                   </Button>
+                  } 
+                  <h3 style={{marginTop: '20px', color: '#40A9FF'}}>Apply here: {job.how_to_apply}</h3>
+                  <ReactMarkdown source={job.description} />
                 </div>
              </Modal>
         </div>

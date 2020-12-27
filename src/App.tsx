@@ -117,7 +117,7 @@ const App:React.FC = () => {
           {loading && <Spin size="large"/>}
           {error && <h1>Error. Try Refreshing.</h1>}
           {jobs.map((job: any) => {
-            return <Job key={job.id} job={job} handleSaveJob={handleSaveJobFunction}/>
+            return <Job key={job.id} job={job} handleSaveJob={handleSaveJobFunction} savedJob={savedJob}/>
           })}
       </ContentWrapper>
 
